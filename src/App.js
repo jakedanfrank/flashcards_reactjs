@@ -17,17 +17,25 @@ class App extends Component {
   };
 
   addFlashCard = ( flashCardData ) => {
-    let flashCard = {id: this.getId(), ...flashCardData, };
+    let flashCard = {id: this.getId(), ...flashCardData, };                 // create action
     this.setState({ flashCards: [flashCard, ...this.state.flashCards], });
+  };
+
+  removeFlashCard = (id) => {
+    const flashCards = this.state.flashCards.filter( flashCard => {
+      if (flashCard.id !==id)                                                // delete action
+        return flashCard 
+    });
+    this.setState({ flashCards: [...flashCards], });
   };
 
   render () {
     return (
-      <Container style={{ paddingTop: "35px" }}>
-        <CardForm add= { this.addContact } />
+      <Container style={{ paddingTop: "35px" }}>                                        
+        <CardForm add= { this.addContact } />  
         <Header as="h1" style={{ textAlign: "center" }}>FLASH CARDS</Header>
         <FlashCards flashCards={ this.state.flashCards } />
-        <CardForm/>
+        <FlashCards flashCards={this.state.flashCards} remove={this.removeFlashCard}/>
       </Container>
     );
   };
